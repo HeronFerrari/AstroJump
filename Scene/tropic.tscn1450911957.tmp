@@ -1,0 +1,113 @@
+[gd_scene format=4 uid="uid://dmakm20yj6w0q"]
+
+[ext_resource type="PackedScene" uid="uid://bp4y50c2kpjpf" path="res://Entidades/player.tscn" id="1_wv76w"]
+[ext_resource type="TileSet" uid="uid://carmc13tle2t1" path="res://Tiles/terrain.tres" id="2_vj82b"]
+[ext_resource type="TileSet" uid="uid://ct6pqg3sisn3h" path="res://Tiles/decoration.tres" id="3_vj82b"]
+[ext_resource type="Texture2D" uid="uid://lxry030sjkhd" path="res://sprites/Seasonal Tilesets/3 - Tropics/Background parts/5 - Sky_color.png" id="4_nx0ej"]
+[ext_resource type="Texture2D" uid="uid://bdvmeqi0yetko" path="res://sprites/Seasonal Tilesets/3 - Tropics/Background parts/4 - Floating_clouds.png" id="5_vi8c3"]
+[ext_resource type="Texture2D" uid="uid://2oqs631ar55d" path="res://sprites/Seasonal Tilesets/3 - Tropics/Background parts/3 - Background_clouds.png" id="6_prgpd"]
+[ext_resource type="Texture2D" uid="uid://dsqrqqweodly" path="res://sprites/Seasonal Tilesets/3 - Tropics/Background parts/1 - Waters_version_1.png" id="7_vbnln"]
+[ext_resource type="Texture2D" uid="uid://ba5mwpp7o2t4e" path="res://sprites/Seasonal Tilesets/3 - Tropics/Background parts/2 - Waters_version_2.png" id="8_f0yod"]
+[ext_resource type="PackedScene" uid="uid://m48mf5fxnori" path="res://Entidades/camera.tscn" id="9_vi8c3"]
+[ext_resource type="PackedScene" uid="uid://h4u3ls34orrt" path="res://Entidades/level_end.tscn" id="10_prgpd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_imdve"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_vbnln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_f0yod")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prgpd"]
+size = Vector2(20, 176)
+
+[node name="Tropic" type="Node2D" unique_id=1786400592]
+metadata/_edit_vertical_guides_ = [520.0]
+
+[node name="TileMaps" type="Node2D" parent="." unique_id=320803487]
+
+[node name="Terrain" type="TileMapLayer" parent="TileMaps" unique_id=527965004]
+tile_map_data = PackedByteArray("AAAAAAsAAgACAAMAAAABAAsAAgACAAMAAAACAAsAAgACAAMAAAADAAsAAgACAAMAAAAEAAsAAgACAAMAAAAFAAsAAgACAAMAAAAGAAsAAgACAAMAAAAHAAsAAgACAAMAAAAIAAsAAgAHAAMAAAALAAoAAgAPAAMAAAAOAAsAAgABAAMAAAAPAAsAAgACAAMAAAAQAAsAAgACAAMAAAARAAsAAgACAAMAAAASAAsAAgACAAMAAAATAAsAAgACAAMAAAAUAAsAAgACAAMAAAAVAAsAAgACAAMAAAAWAAsAAgACAAMAAAAXAAsAAgACAAMAAAAYAAsAAgACAAMAAAAZAAsAAgACAAMAAAAaAAsAAgACAAMAAAAbAAsAAgACAAMAAAAcAAsAAgACAAMAAAAdAAsAAgACAAMAAAAeAAsAAgACAAMAAAAfAAsAAgACAAMAAAAgAAsAAgACAAMAAAAhAAsAAgACAAMAAAAiAAsAAgACAAMAAAAjAAsAAgACAAMAAAApAAsAAgACAAMAAAAqAAsAAgACAAMAAAArAAsAAgACAAMAAAAsAAsAAgACAAMAAAAtAAsAAgACAAMAAAAuAAsAAgACAAMAAAAvAAsAAgACAAMAAAAwAAsAAgACAAMAAAAxAAsAAgACAAMAAAAyAAsAAgACAAMAAAAzAAsAAgACAAMAAAA0AAsAAgACAAMAAAA1AAsAAgACAAMAAAA2AAsAAgACAAMAAAA3AAsAAgACAAMAAAA4AAsAAgACAAMAAAA5AAsAAgACAAMAAAA6AAsAAgACAAMAAAA7AAsAAgACAAMAAAA8AAsAAgACAAMAAAA9AAsAAgACAAMAAAA+AAsAAgACAAMAAAA/AAsAAgACAAMAAABAAAsAAgACAAMAAAAIAAcAAgAJAAMAAAAJAAcAAgAKAAMAAAAKAAcAAgANAAMAAAAKAAUAAgAJAAMAAAALAAUAAgAKAAMAAAAMAAUAAgANAAMAAAAMAAMAAgAJAAMAAAANAAMAAgAKAAMAAAAOAAMAAgANAAMAAAAOAAEAAgAJAAMAAAAPAAEAAgAKAAMAAAAQAAEAAgANAAMAAAALAP//AgAJAAMAAAAMAP//AgAKAAMAAAANAP//AgANAAMAAAAOAP3/AgAJAAMAAAAPAP3/AgAKAAMAAAAQAP3/AgANAAMAAAA=")
+tile_set = ExtResource("2_vj82b")
+
+[node name="Decoration" type="TileMapLayer" parent="TileMaps" unique_id=896965886]
+tile_map_data = PackedByteArray("AAAAAAwAAgAMAAYAAAABAAwAAgAMAAYAAAACAAwAAgAMAAYAAAADAAwAAgAMAAYAAAAEAAwAAgAMAAYAAAAFAAsAAgAMAAUAAAAFAAwAAgAMAAYAAAAGAAwAAgAMAAYAAAAHAAwAAgAMAAYAAAAIAAsAAgAMAAUAAAAIAAwAAgAMAAYAAAAJAAwAAgAMAAYAAAAKAAwAAgAMAAYAAAALAAwAAgAMAAYAAAAMAAwAAgAMAAYAAAANAAwAAgAMAAYAAAAOAAwAAgAMAAYAAAAPAAwAAgAMAAYAAAAQAAwAAgAMAAYAAAARAAsAAgAMAAUAAAARAAwAAgAMAAYAAAASAAwAAgAMAAYAAAATAAwAAgAMAAYAAAAUAAwAAgAMAAYAAAAVAAwAAgAMAAYAAAAWAAwAAgAMAAYAAAAXAAwAAgAMAAYAAAAYAAwAAgAMAAYAAAAZAAwAAgAMAAYAAAAaAAwAAgAMAAYAAAAbAAwAAgAMAAYAAAAcAAsAAgAMAAUAAAAcAAwAAgAMAAYAAAAdAAwAAgAMAAYAAAAeAAwAAgAMAAYAAAAfAAwAAgAMAAYAAAAgAAwAAgAMAAYAAAAhAAwAAgAMAAYAAAAiAAwAAgAMAAYAAAAjAAwAAgAMAAYAAAAkAAwAAgAMAAYAAAAlAAwAAgAMAAYAAAAmAAwAAgAMAAYAAAAnAAwAAgAMAAYAAAAoAAwAAgAMAAYAAAApAAwAAgAMAAYAAAAqAAwAAgAMAAYAAAArAAwAAgAMAAYAAAAsAAwAAgAMAAYAAAAtAAwAAgAMAAYAAAAuAAwAAgAMAAYAAAAvAAwAAgAMAAYAAAAwAAwAAgAMAAYAAAAxAAwAAgAMAAYAAAAyAAwAAgAMAAYAAAAzAAwAAgAMAAYAAAA0AAwAAgAMAAYAAAA1AAwAAgAMAAYAAAA2AAwAAgAMAAYAAAA3AAwAAgAMAAYAAAA4AAwAAgAMAAYAAAA5AAwAAgAMAAYAAAA6AAwAAgAMAAYAAAA7AAwAAgAMAAYAAAA8AAwAAgAMAAYAAAA9AAwAAgAMAAYAAAA+AAwAAgAMAAYAAAA/AAwAAgAMAAYAAABAAAwAAgAMAAYAAABBAAwAAgAMAAYAAABCAAwAAgAMAAYAAABDAAwAAgAMAAYAAABEAAwAAgAMAAYAAABFAAwAAgAMAAYAAABGAAwAAgAMAAYAAABHAAwAAgAMAAYAAABIAAwAAgAMAAYAAABJAAwAAgAMAAYAAABKAAwAAgAMAAYAAABLAAwAAgAMAAYAAAAAAAsAAgAMAAUAAAABAAsAAgAMAAUAAAACAAsAAgAMAAUAAAADAAsAAgAMAAUAAAAEAAsAAgAMAAUAAAAFAAoAAQAAAAAAAAAGAAkAAgABAAEAAAAGAAsAAgAMAAUAAAAHAAsAAgAMAAUAAAAIAAoAAQACAAAAAAAJAAsAAgAMAAUAAAAKAAsAAgAMAAUAAAALAAsAAgAMAAUAAAAMAAsAAgAMAAUAAAANAAsAAgAMAAUAAAAOAAsAAgAMAAUAAAAPAAsAAgAMAAUAAAAQAAkAAgABAAEAAAAQAAsAAgAMAAUAAAARAAoAAQABAAAAAAASAAsAAgAMAAUAAAATAAsAAgAMAAUAAAAUAAsAAgAMAAUAAAAVAAgAAwAAAAAAAAAVAAsAAgAMAAUAAAAWAAsAAgAMAAUAAAAXAAsAAgAMAAUAAAAYAAsAAgAMAAUAAAAZAAsAAgAMAAUAAAAaAAkAAAAJAAEAAAAaAAsAAgAMAAUAAAAbAAsAAgAMAAUAAAAdAAsAAgAMAAUAAAAeAAsAAgAMAAUAAAAfAAsAAgAMAAUAAAAgAAsAAgAMAAUAAAAhAAsAAgAMAAUAAAAiAAsAAgAMAAUAAAAjAAsAAgAMAAUAAAAkAAsAAgAMAAUAAAAlAAsAAgAMAAUAAAAmAAsAAgAMAAUAAAAnAAsAAgAMAAUAAAAoAAsAAgAMAAUAAAApAAsAAgAMAAUAAAAqAAsAAgAMAAUAAAArAAsAAgAMAAUAAAAsAAsAAgAMAAUAAAAtAAsAAgAMAAUAAAAuAAsAAgAMAAUAAAAvAAsAAgAMAAUAAAAwAAsAAgAMAAUAAAAxAAsAAgAMAAUAAAAyAAsAAgAMAAUAAAAzAAsAAgAMAAUAAAA0AAsAAgAMAAUAAAA1AAsAAgAMAAUAAAA2AAsAAgAMAAUAAAA3AAsAAgAMAAUAAAA4AAsAAgAMAAUAAAA5AAsAAgAMAAUAAAA6AAsAAgAMAAUAAAA7AAsAAgAMAAUAAAA8AAsAAgAMAAUAAAA9AAsAAgAMAAUAAAA+AAsAAgAMAAUAAAA/AAsAAgAMAAUAAABAAAsAAgAMAAUAAABBAAsAAgAMAAUAAABCAAsAAgAMAAUAAABDAAsAAgAMAAUAAABEAAsAAgAMAAUAAABFAAsAAgAMAAUAAABGAAsAAgAMAAUAAABHAAsAAgAMAAUAAABIAAsAAgAMAAUAAABJAAsAAgAMAAUAAABKAAsAAgAMAAUAAABLAAsAAgAMAAUAAAAfAAoAAAADAAUAAAA=")
+tile_set = ExtResource("3_vj82b")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1013916254]
+
+[node name="5-Sky" type="ParallaxLayer" parent="ParallaxBackground" unique_id=415206571]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(288, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/5-Sky" unique_id=52026450]
+texture_repeat = 2
+texture = ExtResource("4_nx0ej")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 208)
+
+[node name="4-Floating_clouds" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1311967968]
+motion_scale = Vector2(0.1, 0.05)
+motion_mirroring = Vector2(288, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/4-Floating_clouds" unique_id=968581824]
+texture_repeat = 2
+texture = ExtResource("5_vi8c3")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 208)
+
+[node name="3-Background_clouds" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1686884538]
+motion_scale = Vector2(0.2, 0.1)
+motion_mirroring = Vector2(288, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/3-Background_clouds" unique_id=167819159]
+texture_repeat = 2
+texture = ExtResource("6_prgpd")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 208)
+
+[node name="2-Water" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1523250082]
+motion_scale = Vector2(0.3, 0.15)
+motion_mirroring = Vector2(288, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/2-Water" unique_id=1483308887]
+sprite_frames = SubResource("SpriteFrames_imdve")
+autoplay = "default"
+frame = 1
+frame_progress = 0.09087295
+centered = false
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ParallaxBackground/2-Water" unique_id=220845532]
+position = Vector2(576, 0)
+sprite_frames = SubResource("SpriteFrames_imdve")
+autoplay = "default"
+frame = 1
+frame_progress = 0.09087295
+centered = false
+
+[node name="Player" parent="." unique_id=1952267544 groups=["Player"] instance=ExtResource("1_wv76w")]
+position = Vector2(22, 112)
+
+[node name="Camera" parent="." unique_id=1349837223 instance=ExtResource("9_vi8c3")]
+position = Vector2(48, 130)
+limit_right = 520
+
+[node name="LevelEnd" parent="." unique_id=1317701623 instance=ExtResource("10_prgpd")]
+position = Vector2(534, 162)
+next_level = "forest"
+
+[node name="CollisionShape2D" parent="LevelEnd" index="0" unique_id=985997309]
+position = Vector2(0, -78)
+shape = SubResource("RectangleShape2D_prgpd")
+
+[editable path="LevelEnd"]
