@@ -14,6 +14,7 @@
 [ext_resource type="TileSet" uid="uid://djhmt5w6rmo36" path="res://Tiles/lava.tres" id="12_3tkwh"]
 [ext_resource type="PackedScene" uid="uid://h4u3ls34orrt" path="res://Entidades/level_end.tscn" id="12_uehro"]
 [ext_resource type="PackedScene" uid="uid://dcd8im8flwy1a" path="res://Entidades/skeleton.tscn" id="13_u6jjf"]
+[ext_resource type="PackedScene" uid="uid://cymv5ymixbys2" path="res://Entidades/broken_block.tscn" id="15_a2akr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2dvii"]
 texture = ExtResource("3_p1i8u")
@@ -57,7 +58,7 @@ texture = ExtResource("3_p1i8u")
 
 [sub_resource type="TileSet" id="TileSet_uehro"]
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 0
+physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_2dvii")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uehro"]
@@ -186,5 +187,8 @@ collision_mask = 6
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limit" unique_id=1170432982]
 position = Vector2(-3, 101)
 shape = SubResource("RectangleShape2D_3tkwh")
+
+[node name="BrokenBlock" parent="." unique_id=1226170010 instance=ExtResource("15_a2akr")]
+position = Vector2(257, 126)
 
 [editable path="LevelEnd"]
