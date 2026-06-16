@@ -38,7 +38,6 @@ func _physics_process(delta: float) -> void:
 			attack_state(delta)
 		SkeletonState.dead:
 			dead_state(delta)
-		
 
 	move_and_slide()
 

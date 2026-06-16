@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c3v6r3grs0ahg"]
+
+[ext_resource type="TileSet" uid="uid://beu4bufpbg3ng" path="res://Tiles/hearts.tres" id="1_f37gn"]
+[ext_resource type="Script" uid="uid://ctnln5oxakl8t" path="res://Scripts/health_bar.gd" id="1_mgh88"]
+
+[node name="Health_UI" type="CanvasLayer" unique_id=1678244126]
+layer = 10
+
+[node name="HealthBar" type="TileMapLayer" parent="." unique_id=714199811]
+position = Vector2(5, 5)
+tile_set = ExtResource("1_f37gn")
+script = ExtResource("1_mgh88")

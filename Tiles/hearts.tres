@@ -1,0 +1,13 @@
+[gd_resource type="TileSet" format=3 uid="uid://beu4bufpbg3ng"]
+
+[ext_resource type="Texture2D" uid="uid://ci7xwv5rdts73" path="res://Sprites/Mini FX, Items & UI/Mini UI/Health_Indicator_Black_Outline (8 x 8).png" id="1_lwfht"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cga0y"]
+texture = ExtResource("1_lwfht")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+1:0/0 = 0
+
+[resource]
+tile_size = Vector2i(8, 8)
+sources/0 = SubResource("TileSetAtlasSource_cga0y")

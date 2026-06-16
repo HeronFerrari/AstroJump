@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://dyago36cpx2"]
+
+[ext_resource type="Script" uid="uid://b6s8uoa1xxst" path="res://Scripts/main_menu.gd" id="1_gryub"]
+
+[node name="MainMenu" type="Control" unique_id=381633876]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gryub")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=644478002]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=1634664231]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 20.0
+offset_right = 230.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 32
+text = "Astro Jump"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1814807695]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = 16.0
+offset_right = 39.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=1087303538]
+layout_mode = 2
+text = "Começar"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=2079944451]
+layout_mode = 2
+text = "Sair"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

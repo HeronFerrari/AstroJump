@@ -9,6 +9,7 @@ enum PlayerState{
 	slide,
 	wall,
 	swimming,
+	hurt,
 	dead
 }
 
@@ -26,8 +27,10 @@ enum PlayerState{
 @export var slide_deceleration = 100
 @export var wall_acceleration = 30
 @export var wall_jump_velocity = 210
-@export var water_max_speed = 100
+@export var water_max_speed = 100 
 @export var water_acceleration = 200
+@export var death_delay: float = 1.0 # Tempo extra em segundos após o fim da animação
+
 
 const JUMP_VELOCITY = -300.0
 
@@ -36,12 +39,41 @@ var jump_count = 0
 var direction = 0
 var status: PlayerState
 
+# Elemetnos UI
+# VIDA
+var max_health: int = 5
+var current_health: int = 5
+@onready var health_bar = get_tree().current_scene.find_child("HealthBar", true, false)
+
+# VARIÁVEIS DE INVENCIBILIDADE E COICE
+@export var knockback_force_x = 150.0
+@export var knockback_force_y = -150.0
+@export var invincibility_duration = 1.0 # Tempo invencível em segundos
+
+var is_invincible: bool = false
+var invincibility_timer: float = 0.0
+var blink_timer: float = 0.0
+
+
 func _ready() -> void:
 	go_to_idle_state()
 
 func _physics_process(delta: float) -> void:
-	
 		
+	# Processa o tempo de invencibilidade
+	if is_invincible:
+		invincibility_timer -= delta
+		blink_timer += delta
+		
+		# Faz o sprite piscar ligando/desligando a visibilidade
+		if blink_timer >= 0.07: 
+			anim.visible = !anim.visible
+			blink_timer = 0.0
+			
+		if invincibility_timer <= 0:
+			is_invincible = false
+			anim.visible = true # Garante que o sprite termine visível
+	
 	match status:
 		PlayerState.idle:
 			idle_state(delta)	
@@ -59,6 +91,8 @@ func _physics_process(delta: float) -> void:
 			wall_state(delta)
 		PlayerState.swimming:
 			swimming_state(delta)
+		PlayerState.hurt:
+			hurt_state(delta)
 		PlayerState.dead:
 			dead_state(delta)
 			
@@ -108,12 +142,39 @@ func go_to_swimming_state():
 	anim.play("swimming")
 	velocity.y = min(velocity.y, 150)
 
+func go_to_hurt_state(enemy_position_x: float):
+	status = PlayerState.hurt
+	anim.play("hurt")
+	# Descobre de qual lado o inimigo veio para empurrar o player para o lado oposto
+	var knockback_direction = 1.0 if position.x > enemy_position_x else -1.0
+	
+	velocity.x = knockback_direction * knockback_force_x
+	velocity.y = knockback_force_y # Dá um pequeno pulinho para trás
+
 func go_to_dead_state():
 	if status == PlayerState.dead:
 		return
 	status = PlayerState.dead
 	anim.play("dead")
 	velocity.x = 0
+	
+	# 2. SINCRO: Calcula matematicamente a duração exata da animação
+	if anim.sprite_frames:
+		# Pega o número total de frames da animação "dead"
+		var total_frames = anim.sprite_frames.get_frame_count("dead")
+		# Pega a velocidade da animação (Quantos frames rodam por segundo, ex: 10 FPS)
+		var animation_fps = anim.sprite_frames.get_animation_speed("dead")
+		
+		# Duração em segundos = Total de Frames / FPS
+		var animation_duration = float(total_frames) / float(animation_fps)
+		
+		# Define o tempo do timer do jogador para bater exatamente com o fim do sprite
+		reload_timer.wait_time = animation_duration + death_delay
+	else:
+		# Tempo de segurança caso não encontre o sprite_frames por algum motivo
+		reload_timer.wait_time = 1.0 
+	
+	# 3. Inicia o timer sincronizado
 	reload_timer.start()
 
 func idle_state(delta):
@@ -240,6 +301,40 @@ func swimming_state(delta):
 	if Input.is_action_pressed("jump") or Input.is_action_pressed("duck"):
 		velocity.y = move_toward(velocity.y, water_max_speed * vertical_direction, water_acceleration)
 		
+func take_damage(amount: int, enemy_pos_x: float = 0.0):
+	if status == PlayerState.dead or is_invincible:
+		return
+		
+	current_health -= amount
+	current_health = max(0, current_health)
+	
+	# Atualiza a barra de vida visualmente retirando corações
+	if health_bar:
+		health_bar.change_health(-amount)
+	
+	if current_health <= 0:
+		go_to_dead_state()
+		return
+		
+	# Ativa a invencibilidade temporária
+	is_invincible = true
+	invincibility_timer = invincibility_duration
+	blink_timer = 0.0
+	
+	# Se o dano veio de uma posição válida, aplica o coice
+	if enemy_pos_x != 0.0:
+		go_to_hurt_state(enemy_pos_x)
+	
+func hurt_state(delta):
+	apply_gravity(delta)
+	
+	# Desacelera o empurrão horizontal gradualmente no ar
+	velocity.x = move_toward(velocity.x, 0, deceleration * delta)
+	
+	# Quando o jogador tocar o chão novamente, ele recupera o controle
+	if is_on_floor() and velocity.y >= 0:
+		go_to_idle_state()
+
 func dead_state(delta):
 	apply_gravity(delta)
 
@@ -290,23 +385,27 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("LethalArea"):
-		go_to_dead_state()
+		take_damage(max_health)
 	elif body.is_in_group("Water"):
 		go_to_swimming_state()
 
 func hit_enemy(area: Area2D):
-	if velocity.y > 0:
+	if velocity.y > 0 and status != PlayerState.hurt:
 		# inimigo morre
 		area.get_parent().take_damage()
 		go_to_jump_state()
 	else:
-		go_to_dead_state()
+		take_damage(1, area.global_position.x)
 
 func hit_lethal_area():
-	go_to_dead_state()
+	take_damage(1, global_position.x)
 
 func _on_reload_timer_timeout() -> void:
-	get_tree().reload_current_scene()
+	var game_over_screen = get_tree().current_scene.find_child("GameOver_ui",true,false)
+	
+	if game_over_screen:
+		game_over_screen.exibir_game_over()
+		get_tree().paused = true
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Water"):

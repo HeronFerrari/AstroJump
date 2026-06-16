@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://dcd8im8flwy1a" path="res://Entidades/skeleton.tscn" id="11_vbnln"]
 [ext_resource type="Script" uid="uid://byhqq8kmq7uyq" path="res://Scripts/water_entered.gd" id="14_xugpm"]
 [ext_resource type="PackedScene" uid="uid://dc12uhtt7ftr6" path="res://Entidades/moving_platform.tscn" id="15_c4p3f"]
+[ext_resource type="PackedScene" uid="uid://c3v6r3grs0ahg" path="res://Entidades/health_ui.tscn" id="16_ymkgh"]
+[ext_resource type="PackedScene" uid="uid://c6e8q7p65s4e7" path="res://Entidades/game_over_ui.tscn" id="17_pdme3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_imdve"]
 animations = [{
@@ -160,6 +162,11 @@ time = 3
 
 [node name="Target" parent="MovingPlatform2" index="1" unique_id=267614474]
 position = Vector2(208, 0)
+
+[node name="Health_UI" parent="." unique_id=1678244126 instance=ExtResource("16_ymkgh")]
+
+[node name="GameOver_ui" parent="." unique_id=1123998874 instance=ExtResource("17_pdme3")]
+visible = false
 
 [connection signal="area_entered" from="Water_entered" to="Water_entered" method="_on_area_entered"]
 [connection signal="area_exited" from="Water_entered" to="Water_entered" method="_on_area_exited"]
